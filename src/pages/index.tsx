@@ -15,21 +15,33 @@ const HomePage: NextPage = () => {
       <Box
         className={styles.container}
         styleSheet={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.primary[500],
         }}
       >
         <Box
           styleSheet={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             flexDirection: {
               xs: 'column',
               sm: 'row',
             },
+            width: '100%',
+            maxWidth: '700px',
+            borderRadius: '5px',
+            padding: '32px',
+            margin: '16px',
+            boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
             backgroundColor: appConfig.theme.colors.neutrals[700],
           }}
         >
           {/* Formulário */}
           <Box
-            as='form'
+            tag='form'
             styleSheet={{
               display: 'flex',
               flexDirection: 'column',
@@ -52,15 +64,16 @@ const HomePage: NextPage = () => {
             </Text>
 
             <TextField
+              name='username'
               fullWidth
-              textFieldColors={{
-                neutral: {
-                  textColor: appConfig.theme.colors.neutrals[200],
-                  mainColor: appConfig.theme.colors.neutrals[900],
-                  mainColorHighlight: appConfig.theme.colors.primary[500],
-                  backgroundColor: appConfig.theme.colors.neutrals[800],
-                },
-              }}
+              // textFieldColors={{
+              //   neutral: {
+              //     textColor: appConfig.theme.colors.neutrals[200],
+              //     mainColor: appConfig.theme.colors.neutrals[900],
+              //     mainColorHighlight: appConfig.theme.colors.primary[500],
+              //     backgroundColor: appConfig.theme.colors.neutrals[800],
+              //   },
+              // }}
             />
             <Button
               type='submit'
