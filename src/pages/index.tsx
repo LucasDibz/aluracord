@@ -1,14 +1,21 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import type { NextPage } from 'next';
+import { ChangeEvent, useState } from 'react';
 
 import { Title } from '../components/Title';
+import { useDebounce } from '../hooks/useDebounce';
 
 import appConfig from '../../config.json';
-
 import styles from '../styles/Home.module.scss';
 
 const HomePage: NextPage = () => {
-  const username = 'lucasdibz';
+  const [username, setUsername] = useState('');
+
+  function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
+    setUsername(event.target.value);
+  }
+
+  const debouncedUsername: string = useDebounce<string>(username, 1000);
 
   return (
     <>
@@ -65,6 +72,9 @@ const HomePage: NextPage = () => {
 
             <TextField
               name='username'
+              onChange={handleUsernameChange}
+              value={username}
+              placeholder='Digite o seu usuário do GitHub'
               fullWidth
               // textFieldColors={{
               //   neutral: {
@@ -110,7 +120,12 @@ const HomePage: NextPage = () => {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={`https://github.com/${username}.png`}
+              src={
+                debouncedUsername
+                  ? `https://github.com/${debouncedUsername}.png`
+                  : 'https://github.com/github.png'
+              }
+              alt={debouncedUsername}
             />
             <Text
               variant='body4'
