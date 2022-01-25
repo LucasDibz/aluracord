@@ -1,6 +1,6 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import type { NextPage } from 'next';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Title } from '../components/Title';
 import { useDebounce } from '../hooks/useDebounce';
@@ -8,7 +8,13 @@ import { useDebounce } from '../hooks/useDebounce';
 import appConfig from '../../config.json';
 import styles from '../styles/Home.module.scss';
 
+type GitHubUser = {
+  avatar_url: string;
+  login: string;
+  name: string;
+};
 const HomePage: NextPage = () => {
+  const [user, setUser] = useState<GitHubUser>();
   const [username, setUsername] = useState('');
 
   function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
@@ -16,6 +22,23 @@ const HomePage: NextPage = () => {
   }
 
   const debouncedUsername: string = useDebounce<string>(username, 1000);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const response = await fetch(
+        `https://api.github.com/users/${debouncedUsername}`,
+      );
+      const user = await response.json();
+      setUser(user);
+    }
+
+    if (debouncedUsername.length <= 2) {
+      setUser(undefined);
+      return;
+    }
+
+    fetchUser();
+  }, [debouncedUsername]);
 
   return (
     <>
@@ -120,12 +143,8 @@ const HomePage: NextPage = () => {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={
-                debouncedUsername
-                  ? `https://github.com/${debouncedUsername}.png`
-                  : 'https://github.com/github.png'
-              }
-              alt={debouncedUsername}
+              src={`https://github.com/${user?.login ?? 'github'}.png`}
+              alt={user?.login ?? 'github'}
             />
             <Text
               variant='body4'
