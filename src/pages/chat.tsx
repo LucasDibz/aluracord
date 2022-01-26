@@ -1,4 +1,5 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import appConfig from '../../config.json';
@@ -12,6 +13,34 @@ type Message = {
 };
 
 export default function ChatPage() {
+  const router = useRouter();
+  const { username } = router.query;
+
+  const [message, setMessage] = React.useState('');
+  const [messageList, setMessageList] = React.useState<Message[]>([
+    {
+      id: -1,
+      author: 'omariosouto',
+      text: 'Ôooooolá Pessoas!',
+    },
+    {
+      id: 0,
+      author: 'lucasdibz',
+      text: 'Olá',
+    },
+  ]);
+
+  function handleNewMessage(newMessage: string) {
+    const message = {
+      id: messageList.length + 1,
+      text: newMessage,
+      author: username as string,
+    };
+
+    setMessageList([message, ...messageList]);
+    setMessage('');
+  }
+
   return (
     <Box
       styleSheet={{
@@ -55,20 +84,7 @@ export default function ChatPage() {
             padding: '16px',
           }}
         >
-          <MessageList
-            messages={[
-              {
-                id: 1,
-                author: 'omariosouto',
-                text: 'Ôooooolá Pessoas!',
-              },
-              {
-                id: 2,
-                author: 'lucasdibz',
-                text: 'Hello',
-              },
-            ]}
-          />
+          <MessageList messages={messageList} />
 
           <Box
             as='form'
@@ -78,6 +94,7 @@ export default function ChatPage() {
             }}
           >
             <TextField
+              value={message}
               name='message'
               placeholder='Insira sua mensagem aqui...'
               type='textarea'
@@ -91,6 +108,15 @@ export default function ChatPage() {
                 marginRight: '12px',
                 color: appConfig.theme.colors.neutrals[200],
               }}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && message.trim().length > 0) {
+                  e.preventDefault();
+                  handleNewMessage(message);
+                }
+              }}
+              // @ts-ignore
+              className={styles.hideOverflowScroll}
             />
           </Box>
         </Box>
@@ -124,9 +150,12 @@ function Header() {
 }
 
 function MessageList({ messages }: { messages: Message[] }) {
+  const router = useRouter();
+  const { username } = router.query;
+
   return (
     <Box
-      className={styles.messageList}
+      className={styles.hideOverflowScroll}
       tag='ul'
       styleSheet={{
         overflow: 'scroll',
@@ -164,11 +193,12 @@ function MessageList({ messages }: { messages: Message[] }) {
                 marginRight: '8px',
               }}
               src={`https://github.com/${message.author}.png`}
-              alt='DevSoutinho'
+              alt={message.author}
             />
             <Text tag='strong'>{message.author}</Text>
 
-            {message.author === 'lucasdibz' && (
+            {/* Author tag */}
+            {message.author === username && (
               <Text
                 styleSheet={{
                   fontSize: '10px',

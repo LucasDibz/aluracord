@@ -92,7 +92,7 @@ const HomePage: NextPage = () => {
             // @ts-ignore
             onSubmit={(event) => {
               event.preventDefault();
-              router.push(`/chat?user=${username}`);
+              router.push(`/chat?username=${username}`);
             }}
           >
             <Title tag='h2'>Boas vindas de volta, Exile!</Title>
