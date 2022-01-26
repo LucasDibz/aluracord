@@ -56,7 +56,7 @@ const HomePage: NextPage = () => {
           backgroundSize: 'cover',
           backgroundBlendMode: 'multiply',
           transition: '4s linear',
-          animation: 'Hue-rotate 10s infinite linear',
+          animation: 'color-rotate 10s infinite linear',
         }}
       >
         <Box
