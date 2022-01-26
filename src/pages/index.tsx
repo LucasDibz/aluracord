@@ -6,7 +6,7 @@ import { Title } from '../components/Title';
 import { useDebounce } from '../hooks/useDebounce';
 
 import appConfig from '../../config.json';
-import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
 
 type GitHubUser = {
   avatar_url: string;
@@ -14,6 +14,8 @@ type GitHubUser = {
   name: string;
 };
 const HomePage: NextPage = () => {
+  const router = useRouter();
+
   const [user, setUser] = useState<GitHubUser>();
   const [username, setUsername] = useState('');
 
@@ -40,15 +42,37 @@ const HomePage: NextPage = () => {
     fetchUser();
   }, [debouncedUsername]);
 
+  const [bgColor, setBgColor] = useState<string>('#3F9142');
+  const primaryColors: {
+    [key: string]: string;
+  } = appConfig.theme.colors.primary;
+  const primaryColorsIndexs = Object.keys(appConfig.theme.colors.primary);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomIndex = Math.floor(
+        Math.random() * primaryColorsIndexs.length,
+      );
+      setBgColor(primaryColorsIndexs[randomIndex]);
+    }, 4000);
+    return () => clearInterval(interval);
+  });
+
   return (
     <>
       <Box
-        className={styles.container}
         styleSheet={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[500],
+          // backgroundColor: appConfig.theme.colors.primary[500],
+          backgroundColor: primaryColors[bgColor],
+          // @ts-ignore
+          backgroundImage: `url(https://i.pinimg.com/originals/a5/5e/84/a55e84a0ba39069a2a00eb6ef06a73db.jpg)`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundBlendMode: 'multiply',
+          transition: '4s linear',
         }}
       >
         <Box
@@ -81,8 +105,13 @@ const HomePage: NextPage = () => {
               textAlign: 'center',
               marginBottom: '32px',
             }}
+            // @ts-ignore
+            onSubmit={(event) => {
+              event.preventDefault();
+              router.push(`/chat?user=${username}`);
+            }}
           >
-            <Title tag='h2'>Boas vindas de volta!</Title>
+            <Title tag='h2'>Boas vindas de volta, Exile!</Title>
             <Text
               variant='body3'
               styleSheet={{
@@ -99,14 +128,15 @@ const HomePage: NextPage = () => {
               value={username}
               placeholder='Digite o seu usuário do GitHub'
               fullWidth
-              // textFieldColors={{
-              //   neutral: {
-              //     textColor: appConfig.theme.colors.neutrals[200],
-              //     mainColor: appConfig.theme.colors.neutrals[900],
-              //     mainColorHighlight: appConfig.theme.colors.primary[500],
-              //     backgroundColor: appConfig.theme.colors.neutrals[800],
-              //   },
-              // }}
+              // @ts-ignore
+              textFieldColors={{
+                neutral: {
+                  textColor: appConfig.theme.colors.neutrals[200],
+                  mainColor: appConfig.theme.colors.neutrals[900],
+                  mainColorHighlight: appConfig.theme.colors.primary[500],
+                  backgroundColor: appConfig.theme.colors.neutrals[800],
+                },
+              }}
             />
             <Button
               type='submit'
