@@ -20,13 +20,13 @@ export default function ChatPage() {
   const [messageList, setMessageList] = React.useState<Message[]>([
     {
       id: -1,
-      author: 'omariosouto',
-      text: 'Ôooooolá Pessoas!',
+      author: 'lucasdibz',
+      text: '🦀',
     },
     {
       id: 0,
-      author: 'lucasdibz',
-      text: 'Olá',
+      author: 'omariosouto',
+      text: 'Ôooooolá Pessoas!',
     },
   ]);
 
