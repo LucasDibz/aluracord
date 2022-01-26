@@ -42,22 +42,6 @@ const HomePage: NextPage = () => {
     fetchUser();
   }, [debouncedUsername]);
 
-  const [bgColor, setBgColor] = useState<string>('#3F9142');
-  const primaryColors: {
-    [key: string]: string;
-  } = appConfig.theme.colors.primary;
-  const primaryColorsIndexs = Object.keys(appConfig.theme.colors.primary);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const randomIndex = Math.floor(
-        Math.random() * primaryColorsIndexs.length,
-      );
-      setBgColor(primaryColorsIndexs[randomIndex]);
-    }, 4000);
-    return () => clearInterval(interval);
-  });
-
   return (
     <>
       <Box
@@ -65,14 +49,14 @@ const HomePage: NextPage = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          // backgroundColor: appConfig.theme.colors.primary[500],
-          backgroundColor: primaryColors[bgColor],
+          backgroundColor: appConfig.theme.colors.primary[500],
           // @ts-ignore
           backgroundImage: `url(https://i.pinimg.com/originals/a5/5e/84/a55e84a0ba39069a2a00eb6ef06a73db.jpg)`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundBlendMode: 'multiply',
           transition: '4s linear',
+          animation: 'Hue-rotate 15s infinite linear',
         }}
       >
         <Box
