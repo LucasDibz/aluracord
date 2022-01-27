@@ -95,7 +95,7 @@ const HomePage: NextPage = () => {
               router.push(`/chat?username=${username}`);
             }}
           >
-            <Title tag='h2'>Boas vindas de volta, Exile!</Title>
+            <Title tag='h2'>Still sane, Exile?</Title>
             <Text
               variant='body3'
               styleSheet={{
