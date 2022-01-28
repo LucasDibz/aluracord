@@ -1,8 +1,9 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
-import { useRouter } from 'next/router';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import appConfig from '../../config.json';
+import { ButtonSendSticker } from '../components/ButtonSendSticker';
 
 import styles from '../styles/Chat.module.scss';
 
@@ -118,6 +119,11 @@ export default function ChatPage() {
               // @ts-ignore
               className={styles.hideOverflowScroll}
             />
+            <ButtonSendSticker
+              onStickerClick={(sticker) => {
+                handleNewMessage(':sticker: ' + sticker);
+              }}
+            />
           </Box>
         </Box>
       </Box>
@@ -223,7 +229,11 @@ function MessageList({ messages }: { messages: Message[] }) {
               {new Date().toLocaleDateString()}
             </Text>
           </Box>
-          {message.text}
+          {message?.text.startsWith(':sticker:') ? (
+            <Image src={message.text.replace(':sticker:', '')} alt='sticker' />
+          ) : (
+            message.text
+          )}
         </Text>
       ))}
     </Box>

@@ -1,12 +1,12 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
-import type { NextPage } from 'next';
 import { ChangeEvent, useEffect, useState } from 'react';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
 import { Title } from '../components/Title';
 import { useDebounce } from '../hooks/useDebounce';
 
 import appConfig from '../../config.json';
-import { useRouter } from 'next/router';
 
 type GitHubUser = {
   avatar_url: string;
