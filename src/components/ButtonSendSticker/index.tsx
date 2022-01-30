@@ -85,7 +85,6 @@ export function ButtonSendSticker({ onStickerClick }: ButtonSendStickerProps) {
               <Text
                 // @ts-ignore
                 onClick={() => {
-                  // console.log('[DENTRO DO COMPONENTE] Clicou no sticker:', sticker);
                   if (Boolean(onStickerClick)) {
                     onStickerClick(sticker);
                   }
