@@ -122,7 +122,7 @@ export default function ChatPage() {
           <MessageList messages={messageList} setMessageList={setMessageList} />
 
           <Box
-            as='form'
+            tag='form'
             styleSheet={{
               display: 'flex',
               alignItems: 'center',

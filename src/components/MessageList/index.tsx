@@ -31,7 +31,7 @@ export function MessageList({ messages, setMessageList }: MessageListProps) {
       className={styles.hideOverflowScroll}
       tag='ul'
       styleSheet={{
-        overflow: 'scroll',
+        overflow: 'auto',
         display: 'flex',
         flexDirection: 'column-reverse',
         flex: 1,
@@ -55,6 +55,8 @@ export function MessageList({ messages, setMessageList }: MessageListProps) {
           <Box
             styleSheet={{
               marginBottom: '8px',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
             <Image

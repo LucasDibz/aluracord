@@ -79,6 +79,7 @@ const HomePage: NextPage = () => {
         >
           {/* Formulário */}
           <Box
+            as='form'
             tag='form'
             styleSheet={{
               display: 'flex',
