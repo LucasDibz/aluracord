@@ -103,7 +103,13 @@ export function ButtonSendSticker({ onStickerClick }: ButtonSendStickerProps) {
                   },
                 }}
               >
-                <Image src={sticker} alt='sticker' />
+                <Image
+                  styleSheet={{
+                    // @ts-ignore
+                    maxWidth: '200px'
+                  }}
+                  src={sticker} alt='sticker'
+                />
               </Text>
             ))}
           </Box>
