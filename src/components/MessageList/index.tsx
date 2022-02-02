@@ -118,7 +118,11 @@ export function MessageList({ messages, setMessageList }: MessageListProps) {
             )}
           </Box>
           {message?.text.startsWith(':sticker:') ? (
-            <Image src={message.text.replace(':sticker:', '')} alt='sticker' />
+            <Image
+              styleSheet={{ maxWidth: '120px' }}
+              src={message.text.replace(':sticker:', '')}
+              alt='sticker'
+            />
           ) : (
             message.text
           )}

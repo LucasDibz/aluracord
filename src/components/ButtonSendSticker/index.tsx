@@ -76,7 +76,7 @@ export function ButtonSendSticker({ onStickerClick }: ButtonSendStickerProps) {
               justifyContent: 'space-between',
               flex: 1,
               paddingTop: '16px',
-              overflow: 'scroll',
+              overflow: 'auto',
               // @ts-ignore
               flexWrap: 'wrap',
             }}
@@ -103,13 +103,7 @@ export function ButtonSendSticker({ onStickerClick }: ButtonSendStickerProps) {
                   },
                 }}
               >
-                <Image
-                  styleSheet={{
-                    // @ts-ignore
-                    maxWidth: '200px'
-                  }}
-                  src={sticker} alt='sticker'
-                />
+                <Image src={sticker} alt='sticker' />
               </Text>
             ))}
           </Box>
